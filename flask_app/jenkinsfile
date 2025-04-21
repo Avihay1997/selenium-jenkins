@@ -9,20 +9,21 @@ pipeline {
                     userRemoteConfigs: [[
                         url: 'git@github.com:Avihay1997/selenium-jenkins.git',
                         credentialsId: 'github-ssh-key'
-                    ]]
+                    ]],
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'flask_app']]
                 ])
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip install -r flask_app/requirements.txt'
             }
         }
 
         stage('Run Selenium Tests') {
             steps {
-                sh 'python test_selenium.py'
+                sh 'python flask_app/test_selenium.py'
             }
         }
     }
